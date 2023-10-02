@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Inventation</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='/style.css')}}">
+</head>
+<body>
+    <div class="nav-bar">
+        <h1>Add a New Invention</h1>
+        <div class="nav-bar-buttons">
+            <button><a href="/homepage">Back to Home</a></button>
+            <button><a href="/logout" id="logout_btn">LOG OUT</a></button>
+        </div>
+    </div>
+
+    <form action="/create_invention" method="post" name="new_invention_form" >
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                    {% if messages %}                            <!-- check if there are any messages -->
+                        {% for message in messages %}            <!-- loop through the messages -->
+                                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <label for="name">Name:</label>
+                <input type="text" name="name"><br><br>
+                
+                <label for="description">Description:</label>
+                <textarea name="description" rows="4" cols="50" class="large-textarea"></textarea><br><br>
+
+                <label for="patent_approved">Patent Approved?:</label>
+                <input type="radio" name="patent_approved" value="Affirmative"> Yes
+                <input type="radio" name="patent_approved" value="Negative" checked> No
+                
+                <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

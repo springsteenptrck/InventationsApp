@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='/style.css')}}">
+</head>
+<body>
+    <h1>Welcome {{ first_name }}!</h1>
+    <h2>Inventations</h2>
+    <button><a href="/new_invention" class="new-user-btn">New Inventation</a></button>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Patent Approved?</th>
+                <th>Inventor:</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invention in inventions %}
+                <tr>
+                    <td>{{ invention.name }}</td>
+                    <td>{{ invention.patent_approved }}</td>
+                    <td>{{ invention.first_name }} {{ invention.last_name }}</td>
+                    <td>
+                        <button><a href="/read_one_invention/{{ invention.id }}">View Invention</a></button>
+                        {% if invention.inventor_id == user.id %}
+                            <button><a href="/edit_invention/{{ invention.id }}">Edit</a></button>
+                            <button><a href="/delete/{{ invention.id }}">Delete</a></button>
+                            {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+    <button><a href="/logout" id="logout_btn">LOG OUT</a></button>
+</body>
+</html>
