@@ -36,7 +36,7 @@ class Invention:
 
     @classmethod
     def get_one_with_user(cls,data):
-        query = "SELECT * FROM inventions LEFT JOIN users on users.id = inventions.inventor_id WHERE inventions.id = %(id)s;"
+        query = "SELECT * FROM inventions LEFT JOIN users ON users.id = inventions.inventor_id WHERE inventions.id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query, data)
         row = results[0]
         one_invention = cls(row)

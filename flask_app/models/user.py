@@ -23,7 +23,8 @@ class User:
     @classmethod
     def create_user(cls,data): 
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s)"
-        connectToMySQL(db).query_db(query,data)
+        user_id = connectToMySQL(db).query_db(query, data)
+        return user_id
 
     @classmethod
     def get_by_email(cls,data):
@@ -54,6 +55,13 @@ class User:
             is_valid = False
         if len(user['last_name']) < 3:
             flash("*Last Name must be at least 3 characters", category='registration_form_error')
+            is_valid = False
+
+        query = "SELECT * FROM users WHERE email = %(email)s;"
+        results = connectToMySQL(db).query_db(query, {'email': user['email']})
+        
+        if len(results) > 0:
+            flash('Email already exists.', 'register_err')
             is_valid = False
         if len(user['email']) < 5:
             flash("*Email must be at least 3 characters", category='registration_form_error')

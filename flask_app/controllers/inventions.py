@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, session, flash, url_for
 from flask_app import app
 from flask_app.models.invention import Invention
+from flask_app.models.user import User
 
 @app.route('/new_invention')
 def add_invention():
@@ -26,7 +27,9 @@ def show(id):
     data = {
         'id': id
     }
-    return render_template('view_invention.html',first_name=session['first_name'], invention=Invention.get_one_with_user(data))
+    user_id = session['user_id']
+    user = User.get_by_id(user_id)
+    return render_template('view_invention.html',first_name=session['first_name'], user=user, invention=Invention.get_one_with_user(data))
 
 @app.route('/edit_invention/<int:id>')
 def edit_invention(id):

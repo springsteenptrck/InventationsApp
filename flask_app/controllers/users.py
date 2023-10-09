@@ -54,7 +54,7 @@ def home_page():
     user_id = session['user_id']
     user = User.get_by_id(user_id)
     inventions = Invention.read_all_inventions()
-
+    print(user_id) 
     return render_template('home_page.html', first_name=session['first_name'], user=user, inventions=inventions)
 
 @app.route('/logout')
